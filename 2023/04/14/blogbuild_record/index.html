@@ -1,0 +1,246 @@
+<!DOCTYPE html><html lang="en" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>博客搭建记录 | Dikle | 记录</title><meta name="author" content="Dikle"><meta name="copyright" content="Dikle"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言首先介绍搭建博客需要使用的东西：Nodejs是一个Javascript运行环境，作为底层架构在本例中实现构建和生成静态网站；Git，是分布式版本控制系统，用于将本地的资源文件上传到服务器端；Github应该不陌生了，全世界最大的程序员交流网站，它同时免费提供静态网站的服务器。   Nodejs Git Github账号 Hexo框架 文本编辑器（如vscode、Typora） 一个域名（可选）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="博客搭建记录">
+<meta property="og:url" content="http://example.com/2023/04/14/blogbuild_record/index.html">
+<meta property="og:site_name" content="Dikle | 记录">
+<meta property="og:description" content="前言首先介绍搭建博客需要使用的东西：Nodejs是一个Javascript运行环境，作为底层架构在本例中实现构建和生成静态网站；Git，是分布式版本控制系统，用于将本地的资源文件上传到服务器端；Github应该不陌生了，全世界最大的程序员交流网站，它同时免费提供静态网站的服务器。   Nodejs Git Github账号 Hexo框架 文本编辑器（如vscode、Typora） 一个域名（可选）">
+<meta property="og:locale" content="en_US">
+<meta property="og:image" content="http://example.com/img/jg.jpg">
+<meta property="article:published_time" content="2023-04-14T06:00:14.000Z">
+<meta property="article:modified_time" content="2023-07-18T13:26:09.340Z">
+<meta property="article:author" content="Dikle">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/jg.jpg"><link rel="shortcut icon" href="/img/jw.jpg"><link rel="canonical" href="http://example.com/2023/04/14/blogbuild_record/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: 'Copy successfully',
+    error: 'Copy error',
+    noSupport: 'The browser does not support'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: 'days',
+  dateSuffix: {
+    just: 'Just',
+    min: 'minutes ago',
+    hour: 'hours ago',
+    day: 'days ago',
+    month: 'months ago'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: false,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '博客搭建记录',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-07-18 21:26:09'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="/css/background.css"<link rel="stylesheet" href="/css/custom.css"><!-- hexo injector head_end start --><link rel="stylesheet" href="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.css" /><!-- hexo injector head_end end --><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/jg.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fab fa-instagram"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.bilibili.com"><i class="fa-fw fab fa-bilibili"></i><span> B站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/Top.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="Dikle | 记录"><img class="site-icon" src="/img/jw.jpg"/><span class="site-name">Dikle | 记录</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fab fa-instagram"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.bilibili.com"><i class="fa-fw fab fa-bilibili"></i><span> B站</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">博客搭建记录</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">Created</span><time class="post-meta-date-created" datetime="2023-04-14T06:00:14.000Z" title="Created 2023-04-14 14:00:14">2023-04-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">Updated</span><time class="post-meta-date-updated" datetime="2023-07-18T13:26:09.340Z" title="Updated 2023-07-18 21:26:09">2023-07-18</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">Word count:</span><span class="word-count">1.5k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">Reading time:</span><span>4min</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>首先介绍搭建博客需要使用的东西：Nodejs是一个Javascript运行环境，作为底层架构在本例中实现构建和生成静态网站；Git，是分布式版本控制系统，用于将本地的资源文件上传到服务器端；Github应该不陌生了，全世界最大的程序员交流网站，它同时免费提供静态网站的服务器。</p>
+<blockquote>
+<ul>
+<li>Nodejs</li>
+<li>Git</li>
+<li>Github账号</li>
+<li>Hexo框架</li>
+<li>文本编辑器（如vscode、Typora）</li>
+<li>一个域名（可选）</li>
+<li>CDN加速（可选）</li>
+</ul>
+</blockquote>
+<h1 id="环境搭建"><a href="#环境搭建" class="headerlink" title="环境搭建"></a>环境搭建</h1><h2 id="Nodejs"><a href="#Nodejs" class="headerlink" title="Nodejs"></a>Nodejs</h2><h3 id="安装Nodejs"><a href="#安装Nodejs" class="headerlink" title="安装Nodejs"></a>安装Nodejs</h3><p>在<b><a target="_blank" rel="noopener" href="https://nodejs.org/en/download">官方下载地址</a></b>中选择适合自己系统的版本下载安装即可。<br>在cmd中输入该命令查看版本号，成功<u>返回版本号</u>即代表安装完毕。<br>如提示找不到命令，请尝试把nodejs放入系统path中，或在<b><a target="_blank" rel="noopener" href="https://www.bilibili.com/">B站</a></b>、<b><a target="_blank" rel="noopener" href="https://www.csdn.net/">CSDN</a></b>中查找教程进行卸载重装。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">node -v</span><br></pre></td></tr></table></figure>
+<h3 id="npm"><a href="#npm" class="headerlink" title="npm"></a>npm</h3><p>在这里，我介绍一下npm（Node Package Manager），它是一个用于管理和共享 JavaScript 包的包管理器，我们使用它来向中央服务器发出请求下载某个模块（比如本文的建站Hexo模块），有Python基础的同学应该会立即联想到Python的pip指令，你的直觉没错的，但仍存在一个主要区别，npm 不仅仅用于管理 JavaScript 包，还用于管理其他前端资源，如样式表、图像、字体等。   </p>
+<p>npm的中央服务器是架设在国外的，较慢的访问速度不利于我们安装、学习相关模块，可使用以下指令将默认的中央服务器切换为国内的淘宝镜像源。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm config set registry https://registry.npm.taobao.org/</span><br></pre></td></tr></table></figure>
+<h2 id="Git"><a href="#Git" class="headerlink" title="Git"></a>Git</h2><p><b><a target="_blank" rel="noopener" href="https://git-scm.com/downloads">官方下载地址</a></b><br>同样是选择合适的版本下载安装即可，具体的安装步骤本文不赘述。<br>同样使用查看版本号的指令检查是否安装好</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git --version</span><br></pre></td></tr></table></figure>
+
+<h2 id="安装Hexo"><a href="#安装Hexo" class="headerlink" title="安装Hexo"></a>安装Hexo</h2><h3 id="使用npm指令安装"><a href="#使用npm指令安装" class="headerlink" title="使用npm指令安装"></a>使用npm指令安装</h3><p>​           使用管理员身份打开Git bash</p>
+<p>​			在Git bash中键入：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g hexo-cli</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="安装部署插件"><a href="#安装部署插件" class="headerlink" title="安装部署插件"></a>安装部署插件</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install hexo-deployer-git --save</span><br></pre></td></tr></table></figure>
+
+<p>​			其中，可选参数save代表将此插件添加到依赖路径，即执行npm install时，自动安装</p>
+<h3 id="初始化Hexo"><a href="#初始化Hexo" class="headerlink" title="初始化Hexo"></a>初始化Hexo</h3><p>新建一个博客专属的文件夹，注意名称不要是中文，右键“Git bash here”，即在此处打开命令行，或者在开始菜单打开bash命令行后，使用cd指令进入该文件夹。<br>使用初始化指令，将在指向的目录中初始化hexo模块，我们的网站也将存在于此。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo init</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo cl &amp;&amp; hexo g &amp;&amp; hexo s</span><br></pre></td></tr></table></figure>
+
+<p>根据访问执行代码后给予的地址即可进行本地访问，如果要把本地的网站上传到github pages服务器，则使用以下代码，但别急，还要完成GitHub的配置。</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">hexo d</span><br></pre></td></tr></table></figure>
+<p>​			</p>
+<hr>
+<h2 id="Github"><a href="#Github" class="headerlink" title="Github"></a>Github</h2><p>我们需要在Github注册一个账号，<b><a target="_blank" rel="noopener" href="https://github.com/">官方网址</a></b>。<br>在个人仓库中创建一个名为“yourname.github.io”的仓库，在仓库中点击“CODE”下拉，可以获得登入仓库的ssh链接：<br><img src="/%5Cpost_photos%5Cblog_build%5Cimage-1.png" alt="Alt text"><br>打开博客目录下名字为“_config.yml”的配置文件，拉到最底，会有这样的代码<br><img src="/%5Cpost_photos%5Cblog_build%5Cimage.png" alt="Alt text">   </p>
+<ul>
+<li>type指我们上传的方式，填git</li>
+<li>repository意为仓库，指要上传的目的地，这里填入你自己仓库的ssh链接</li>
+<li>branch指分支，即仓库中不同的划分区域，我们填main就好</li>
+</ul>
+<h3 id="Git关联Github"><a href="#Git关联Github" class="headerlink" title="Git关联Github"></a>Git关联Github</h3><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git config --global user.name &quot;你的github账户名&quot;</span><br><span class="line">git config --global user.email 你github绑定的邮箱</span><br></pre></td></tr></table></figure>
+<p>通过这两行代码，本地git就能通过你的账户名与邮箱在网络上确定你目标服务器的位置，但你并没有提供密码，所以每次你要上传到仓库，都要输入一次密码验证你是仓库的所有者，那有没有类似“记住密码”的功能呢？有的。</p>
+<h3 id="ssh密钥"><a href="#ssh密钥" class="headerlink" title="ssh密钥"></a>ssh密钥</h3><p>在cmd中输入以下指令，生成git密钥</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh-keygen -t rsa -C &quot;你github所绑定的邮箱&quot;</span><br></pre></td></tr></table></figure>
+<p>生成成功后会给出一个路径，进入该路径其中.pub后缀的就是公钥，另一个为私钥。私钥是你自己持有的，注意保管，而后把公钥内容复制到github-&gt;setting-&gt;SSH and GPG keys-&gt;new SSH key，把公钥粘贴到这里，这样服务器端就可以核验你的身份了。<br><img src="/%5Cpost_photos%5Cblog_build%5Cimage_3.png" alt="Alt text"><br>具体原理参考Chatgpt给出的答案：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">SSH 密钥原理主要包括以下几个步骤：</span><br><span class="line"></span><br><span class="line">1、生成密钥对：在本地计算机上生成一对密钥，包括公钥和私钥。这对密钥是一对相关联的加密算法生成的。</span><br><span class="line"></span><br><span class="line">2、分发公钥：将生成的公钥传输给需要进行身份验证的服务器，比如 GitHub。公钥可以被安全地分享，而私钥必须保密。</span><br><span class="line"></span><br><span class="line">3、SSH 连接过程：当你使用 SSH 连接到某个服务器时，客户端会向服务器发送一个请求，要求进行身份验证。</span><br><span class="line"></span><br><span class="line">4、服务器验证：服务器收到请求后，会检查客户端提供的公钥是否在其允许的授权密钥列表中。如果匹配成功，服务器会使用公钥对请求进行加密，并返回一个随机生成的消息。</span><br><span class="line"></span><br><span class="line">5、客户端验证：客户端收到服务器返回的消息后，使用私钥解密。如果密钥匹配成功，客户端会将解密后的消息发送回服务器进行验证。</span><br><span class="line"></span><br><span class="line">6、连接建立：如果验证成功，服务器会允许客户端进行 SSH 连接。</span><br></pre></td></tr></table></figure>
+
+<h1 id="Markdown介绍"><a href="#Markdown介绍" class="headerlink" title="Markdown介绍"></a>Markdown介绍</h1><p>Markdown是一种轻量级标记语言，拥有自己的格式，因此它是跨语言，跨平台的。本介绍使用VSCODE进行编写，VS内置对该语法的支持，支持格式纠错，生成HTML预览，对新人友好。<br>可在<b><a target="_blank" rel="noopener" href="https://www.runoob.com/markdown/md-tutorial.html">菜鸟教程-Markdown</a></b>中学习相关语法。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">Author: </span><span class="post-copyright-info"><a href="http://example.com">Dikle</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">Link: </span><span class="post-copyright-info"><a href="http://example.com/2023/04/14/blogbuild_record/">http://example.com/2023/04/14/blogbuild_record/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">Copyright Notice: </span><span class="post-copyright-info">All articles in this blog are licensed under <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> unless stating additionally.</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/img/jg.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/2023/04/14/photo/" title="摄影作品"><img class="cover" src="/img/%E5%B0%81%E9%9D%A2_%E6%91%84%E5%BD%B1.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">Previous Post</div><div class="prev_info">摄影作品</div></div></a></div><div class="next-post pull-right"><a href="/2023/04/12/test/" title="你好，世界！"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">Next Post</div><div class="next_info">你好，世界！</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/jg.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">Dikle</div><div class="author-info__description">这是一个个人博客嗷</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">Articles</div><div class="length-num">4</div></a><a href="/tags/"><div class="headline">Tags</div><div class="length-num">0</div></a><a href="/categories/"><div class="headline">Categories</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Dikle-OvO"><i class="fab fa-github"></i><span>Github主页</span></a><div class="card-info-social-icons is-center"><a class="social-icon" href="https://github.com/Dikle-OvO" target="_blank" title="Github"><i class="fab fa-github" style="color: #24292e;"></i></a><a class="social-icon" href="mailto:1275333614@qq.com" target="_blank" title="Email"><i class="fas fa-envelope" style="color: #4a7dbe;"></i></a></div></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>Catalog</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA"><span class="toc-number">2.</span> <span class="toc-text">环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Nodejs"><span class="toc-number">2.1.</span> <span class="toc-text">Nodejs</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Nodejs"><span class="toc-number">2.1.1.</span> <span class="toc-text">安装Nodejs</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#npm"><span class="toc-number">2.1.2.</span> <span class="toc-text">npm</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Git"><span class="toc-number">2.2.</span> <span class="toc-text">Git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85Hexo"><span class="toc-number">2.3.</span> <span class="toc-text">安装Hexo</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%BF%E7%94%A8npm%E6%8C%87%E4%BB%A4%E5%AE%89%E8%A3%85"><span class="toc-number">2.3.1.</span> <span class="toc-text">使用npm指令安装</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2%E6%8F%92%E4%BB%B6"><span class="toc-number">2.3.2.</span> <span class="toc-text">安装部署插件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96Hexo"><span class="toc-number">2.3.3.</span> <span class="toc-text">初始化Hexo</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Github"><span class="toc-number">2.4.</span> <span class="toc-text">Github</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Git%E5%85%B3%E8%81%94Github"><span class="toc-number">2.4.1.</span> <span class="toc-text">Git关联Github</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ssh%E5%AF%86%E9%92%A5"><span class="toc-number">2.4.2.</span> <span class="toc-text">ssh密钥</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Markdown%E4%BB%8B%E7%BB%8D"><span class="toc-number">3.</span> <span class="toc-text">Markdown介绍</span></a></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>Recent Post</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/07/18/python/" title="python">python</a><time datetime="2023-07-18T10:05:49.000Z" title="Created 2023-07-18 18:05:49">2023-07-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2023/04/14/photo/" title="摄影作品"><img src="/img/%E5%B0%81%E9%9D%A2_%E6%91%84%E5%BD%B1.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="摄影作品"/></a><div class="content"><a class="title" href="/2023/04/14/photo/" title="摄影作品">摄影作品</a><time datetime="2023-04-14T07:58:45.000Z" title="Created 2023-04-14 15:58:45">2023-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/14/blogbuild_record/" title="博客搭建记录">博客搭建记录</a><time datetime="2023-04-14T06:00:14.000Z" title="Created 2023-04-14 14:00:14">2023-04-14</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2023/04/12/test/" title="你好，世界！">你好，世界！</a><time datetime="2023-04-11T19:51:23.000Z" title="Created 2023-04-12 03:51:23">2023-04-12</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 By Dikle</div><div class="framework-info"><span>Framework </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>Theme </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text"><span>本网站由</span><a target="_blank" rel="noopener" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral"><img src="/img/又拍云_logo.png" width="60px" height="30px" /></a><span>提供加速服务</span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="Read Mode"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="Switch Between Light And Dark Mode"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="Toggle between single-column and double-column"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="Setting"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="Table Of Contents"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="Back To Top"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"></div><script async src="/js/title.js"></script><script defer src="/js/cursor.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script><script id="canvas_nest" defer="defer" color="0,0,255" opacity="0.7" zIndex="-1" count="99" mobile="true" src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/canvas-nest.min.js"></script></div><!-- hexo injector body_end start --><script data-pjax>
+  function butterfly_clock_anzhiyu_injector_config(){
+    var parent_div_git = document.getElementsByClassName('sticky_layout')[0];
+    var item_html = '<div class="card-widget card-clock"><div class="card-glass"><div class="card-background"><div class="card-content"><div id="hexo_electric_clock"><img class="entered loading" id="card-clock-loading" src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/loading.gif" style="height: 120px; width: 100%;" data-ll-status="loading"/></div></div></div></div></div>';
+    console.log('已挂载butterfly_clock_anzhiyu')
+    if(parent_div_git) {
+      parent_div_git.insertAdjacentHTML("afterbegin",item_html)
+    }
+  }
+  var elist = 'null'.split(',');
+  var cpage = location.pathname;
+  var epage = 'all';
+  var qweather_key = 'b16a1fa0e63c46a4b8f28abfb06ae3fe';
+  var gaud_map_key = 'e2b04289e870b005374ee030148d64fd&s=rsv3';
+  var baidu_ak_key = 'undefined';
+  var flag = 0;
+  var clock_rectangle = '112.982279,28.19409';
+  var clock_default_rectangle_enable = 'false';
+
+  for (var i=0;i<elist.length;i++){
+    if (cpage.includes(elist[i])){
+      flag++;
+    }
+  }
+
+  if ((epage ==='all')&&(flag == 0)){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  else if (epage === cpage){
+    butterfly_clock_anzhiyu_injector_config();
+  }
+  </script><script src="https://widget.qweather.net/simple/static/js/he-simple-common.js?v=2.0"></script><script data-pjax src="https://cdn.cbd.int/hexo-butterfly-clock-anzhiyu/lib/clock.min.js"></script><!-- hexo injector body_end end --></body></html>
