@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>记录|智能视觉人体追随 | DIKLE | 记录</title><meta name="author" content="黄俊刚"><meta name="copyright" content="黄俊刚"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="前言&amp;emsp;&amp;emsp;本设计为本人的本科毕设，此文用于记录分享。相关设计指标如下：  设计主控电路及合适的底部运动结构；设计箱体的整体结构。 设计符合航空托运标准的USB接口的充电结构及电源电路的设计，并能够提供在0.5m&#x2F;s的运行速度下3小时的续航。 设计跟随模块选择合适的跟随识别方案，要求能够设置保持跟随距离分别在50cm、100cm、200cm并且预设跟随值与实际测量距离值误差不高于1">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录|智能视觉人体追随">
+<meta property="og:url" content="https://dikle-ovo.github.io/2025/02/20/Graduation-Design/index.html">
+<meta property="og:site_name" content="DIKLE | 记录">
+<meta property="og:description" content="前言&amp;emsp;&amp;emsp;本设计为本人的本科毕设，此文用于记录分享。相关设计指标如下：  设计主控电路及合适的底部运动结构；设计箱体的整体结构。 设计符合航空托运标准的USB接口的充电结构及电源电路的设计，并能够提供在0.5m&#x2F;s的运行速度下3小时的续航。 设计跟随模块选择合适的跟随识别方案，要求能够设置保持跟随距离分别在50cm、100cm、200cm并且预设跟随值与实际测量距离值误差不高于1">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dikle-ovo.github.io/2025/02/20/Graduation-Design/cover.png">
+<meta property="article:published_time" content="2025-02-20T04:40:36.000Z">
+<meta property="article:modified_time" content="2025-10-06T14:05:23.723Z">
+<meta property="article:author" content="黄俊刚">
+<meta property="article:tag" content="记录">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dikle-ovo.github.io/2025/02/20/Graduation-Design/cover.png"><link rel="shortcut icon" href="/my_img/cat.jpg"><link rel="canonical" href="https://dikle-ovo.github.io/2025/02/20/Graduation-Design/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '记录|智能视觉人体追随',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2025-10-06 22:05:23'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4475051_etb5xjltcej.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/my_img/cat.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fab fa-instagram"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.bilibili.com"><i class="fa-fw fab fa-bilibili"></i><span> B站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.douban.com/people/Dikle/"><i class="fa-fw iconfont icon-douban"></i><span> 豆瓣</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/2025/02/20/Graduation-Design/cover.png')"><nav id="nav"><span id="blog-info"><a href="/" title="DIKLE | 记录"><img class="site-icon" src="/my_img/cat.jpg"/><span class="site-name">DIKLE | 记录</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fab fa-instagram"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.bilibili.com"><i class="fa-fw fab fa-bilibili"></i><span> B站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.douban.com/people/Dikle/"><i class="fa-fw iconfont icon-douban"></i><span> 豆瓣</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">记录|智能视觉人体追随</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2025-02-20T04:40:36.000Z" title="发表于 2025-02-20 12:40:36">2025-02-20</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2025-10-06T14:05:23.723Z" title="更新于 2025-10-06 22:05:23">2025-10-06</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">1.2k</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>4分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&emsp;&emsp;本设计为本人的本科毕设，此文用于记录分享。相关设计指标如下：</p>
+<ol>
+<li>设计主控电路及合适的底部运动结构；设计箱体的整体结构。</li>
+<li>设计符合航空托运标准的USB接口的充电结构及电源电路的设计，并能够提供在0.5m/s的运行速度下3小时的续航。</li>
+<li>设计跟随模块选择合适的跟随识别方案，要求能够设置保持跟随距离分别在50cm、100cm、200cm并且预设跟随值与实际测量距离值误差不高于15%。</li>
+<li>选择合适的控制方法进行运动结构的驱动设计，要求设计时速可以达到0.15m/s～0.5m/s。</li>
+<li>设计避障模块，可识别200cm内的障碍物，精度±2cm。</li>
+<li>设计语音播报模块，当用户与行李箱距离超过300cm或超出30s无识别时发出红色LED灯并有声音警报声。</li>
+<li>上位机/APP终端：    </li>
+</ol>
+<p>&emsp;&emsp;最终所有设计任务均已实现。 </p>
+<h1 id="MaixCam"><a href="#MaixCam" class="headerlink" title="MaixCam"></a>MaixCam</h1><p>&emsp;&emsp;MaixCam是sipeed于24年推出的一款嵌入式智能摄像头，具有强大的AI计算能力，本设计与AI相关的功能都运行在此平台上。<br>&emsp;&emsp;MaixCam支持两种开发方式：MaixVision与MaixCDK，前者使用python方便快捷，后者使用C/C++效率高(事实上使用python一般也都是cpython，即底层轮子为C编译出来的库，效率也可以达到很高)。使用CDK的话主要参考下列几篇文章：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://maixhub.com/share/33">环境搭建与编译测试</a></li>
+<li><a target="_blank" rel="noopener" href="https://maixhub.com/share/34">点灯测试</a></li>
+<li><a target="_blank" rel="noopener" href="https://maixhub.com/share/36">LVGL的使用</a> <h2 id="视觉追踪"><a href="#视觉追踪" class="headerlink" title="视觉追踪"></a>视觉追踪</h2>&emsp;&emsp;经调研后，发现有两种方法能实现对特定目标（如人体）的识别与追踪：目标检测算法+deepsort或者自学习追踪算法，本次设计使用的后者。<br>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://github.com/HonglinChu/SiamTrackers/tree/master/NanoTrack">官方Git地址</a>，在MaixCam中，官方已经移植完成，我们直接使用即可<h2 id="目标测距"><a href="#目标测距" class="headerlink" title="目标测距"></a>目标测距</h2>&emsp;&emsp; 使用单目测距<script type="math/tex; mode=display">
+D = (F*W)/P</script>&emsp;&emsp;其中D是目标到摄像机的距离, Ｆ是摄像机焦距（焦距需要自己进行标定获取）, W是目标的宽度或者高度（行人检测一般以人的身高为基准）, P是指目标在图像中所占据的像素，<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_45077760/article/details/130261489?fromshare=blogdetail&amp;sharetype=blogdetail&amp;sharerId=130261489&amp;sharerefer=PC&amp;sharesource=qq_29165907&amp;sharefrom=from_link">参考文章</a>。实现上极为简单，对应精度也很有限，如有精度、稳定性要求还是应该使用双目测距、激光雷达或者TOF。<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 首先基于实际测量数据计算出K值，再在后续中调用K值计算距离即可，简单的等比例计算</span></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">caculate_k</span>(<span class="params">width, distance</span>):</span><br><span class="line">    <span class="keyword">return</span> width * distance</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">caculate_distance</span>(<span class="params">width, k</span>):</span><br><span class="line">    <span class="keyword">return</span> k / width</span><br><span class="line"></span><br><span class="line">k = caculate_k(<span class="number">46</span>, <span class="number">120</span>) <span class="comment"># 46个像素点对应120cm</span></span><br></pre></td></tr></table></figure>
+<h1 id="控制"><a href="#控制" class="headerlink" title="控制"></a>控制</h1>&emsp;&emsp;小车电机控制使用经典的stm32c8t6即可实现。<h2 id="PID"><a href="#PID" class="headerlink" title="PID"></a>PID</h2>&emsp;&emsp;电机转速控制使用增量式PID，转向环使用位置式PD，距离环使用位置式PID<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">Motor_PID1</span><span class="params">(<span class="type">int</span> input_speed,<span class="type">int</span> setspeed)</span>                         <span class="comment">//增量式PID，PI用于速度闭环控制</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">double</span> pwmout=<span class="number">0</span>,last_error=<span class="number">0</span>,last_last_error=<span class="number">0</span>,dpwmout= <span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> a=<span class="number">0.7</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="type">float</span> error =setspeed - input_speed;	                           <span class="comment">// 误差</span></span><br><span class="line">	</span><br><span class="line">	error = (<span class="number">1</span>-a)*error + a*last_error; <span class="comment">// 使得波形更加平滑，滤除高频干扰，防止速度突变</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">float</span> d_error=error-last_error;</span><br><span class="line">	<span class="type">float</span> dd_error = <span class="number">-2</span>*last_error+error+last_last_error; </span><br><span class="line">	</span><br><span class="line">	pwmout+=PID1.KP*d_error + PID1.KI*error + PID1.KD*dd_error; <span class="comment">// 输出pwm信号</span></span><br><span class="line">	</span><br><span class="line">	last_last_error=last_error;</span><br><span class="line">	last_error = error;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(pwmout &gt; <span class="number">100</span>) pwmout = <span class="number">100</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pwmout &lt; <span class="number">-100</span>) pwmout = <span class="number">-100</span>;</span><br><span class="line">	  </span><br><span class="line">	<span class="keyword">return</span> pwmout;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">Turn_PID</span><span class="params">(<span class="type">int</span> input,<span class="type">int</span> target)</span>                         <span class="comment">//位置式PD，用于速度闭环控制</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">double</span> pwmout=<span class="number">0</span>, last_error=<span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> a=<span class="number">0.7</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="type">double</span> error =target - input;	                           <span class="comment">// 误差</span></span><br><span class="line">	</span><br><span class="line"><span class="comment">//	error = (1-a)*error + a*last_error; // 使得波形更加平滑，滤除高频干扰，防止速度突变</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">double</span> d_error=error-last_error;</span><br><span class="line"></span><br><span class="line">	pwmout = PID_Turn.KP*error + PID_Turn.KD*d_error; <span class="comment">// 输出pwm信号</span></span><br><span class="line"></span><br><span class="line">	last_error = error;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">if</span>(pwmout &gt; <span class="number">5</span>) pwmout = <span class="number">5</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pwmout &lt; <span class="number">-5</span>) pwmout = <span class="number">-5</span>;</span><br><span class="line">	  </span><br><span class="line">	<span class="keyword">return</span> (<span class="type">int</span>)round(pwmout);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">Dis_PID</span><span class="params">(<span class="type">int</span> input,<span class="type">int</span> target)</span>                         <span class="comment">//位置式PID，用于距离闭环控制</span></span><br><span class="line">&#123;</span><br><span class="line">	<span class="type">static</span> <span class="type">double</span> pwmout=<span class="number">0</span>, last_error=<span class="number">0</span>, integral_sum=<span class="number">0</span>;</span><br><span class="line">	<span class="type">float</span> a=<span class="number">0.7</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="type">float</span> error =target - input;	                           <span class="comment">// 误差</span></span><br><span class="line">	</span><br><span class="line">	error = (<span class="number">1</span>-a)*error + a*last_error; <span class="comment">// 使得波形更加平滑，滤除高频干扰，防止速度突变</span></span><br><span class="line">	</span><br><span class="line">	<span class="type">float</span> d_error=error-last_error;</span><br><span class="line">	integral_sum += error;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">if</span> (integral_sum &gt; <span class="number">2</span>) </span><br><span class="line">	&#123;</span><br><span class="line">        integral_sum = <span class="number">2</span>;</span><br><span class="line">     &#125; </span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span> (integral_sum &lt; <span class="number">-2</span>) </span><br><span class="line">	&#123;</span><br><span class="line">		integral_sum = <span class="number">-2</span>;</span><br><span class="line">    &#125;</span><br><span class="line">	</span><br><span class="line">	pwmout = PID_Dis.KP*error + PID_Dis.KI*integral_sum + PID_Dis.KD*d_error; <span class="comment">// 输出pwm信号</span></span><br><span class="line"></span><br><span class="line">	last_error = error;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(pwmout &gt; <span class="number">10</span>) pwmout = <span class="number">10</span>;</span><br><span class="line">	<span class="keyword">else</span> <span class="keyword">if</span>(pwmout &lt; <span class="number">-10</span>) pwmout = <span class="number">-10</span>;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(pwmout&gt;=<span class="number">-1</span> &amp;&amp; pwmout&lt;=<span class="number">1</span>) pwmout = <span class="number">0</span>;</span><br><span class="line">	  </span><br><span class="line">	<span class="keyword">return</span> (<span class="type">int</span>)round(pwmout);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h1 id="硬件"><a href="#硬件" class="headerlink" title="硬件"></a>硬件</h1>&emsp;&emsp;在本次设计中，需绘制PCB,电路简单，但为了布线方便仍使用四层板设计。<br>开关电源部分有两个要点：</li>
+</ol>
+<ul>
+<li>通畅，即电流的路径</li>
+<li>防干扰<br>在整体上，还要打地孔</li>
+</ul>
+<p>硬件选型：  </p>
+<ul>
+<li>三串充电模块：<a target="_blank" rel="noopener" href="https://www.semiee.com/file2/a4f490b9e343359c907e4b9007cbfc11/Injoinic/Injoinic-IP2326.pdf">ip2326</a>  </li>
+<li>锂电池保护板：CM1033DS </li>
+<li>电机控制芯片：<a target="_blank" rel="noopener" href="https://www.semiee.com/file2/b15230a99a9836ce01450a7fc20d6096/Toshiba/Toshiba-TB6612FNG_datasheet_en_20141001.pdf">TB6612</a></li>
+<li>降压稳压芯片：AMS1117，MP2225<br><img src="image.png" alt="IP2306"><br><img src="image-1.png" alt="CM1033DS"><br>参考文章：</li>
+</ul>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://oshwhub.com/hbozyq/ip2326">三串锂电池充放电电路</a></li>
+<li><a target="_blank" rel="noopener" href="https://oshwhub.com/radiotube/18650-cm1033-san-chuan-singel_copy_copy_copy_copy">18650三串保护板</a><h2 id="3D打印"><a href="#3D打印" class="headerlink" title="3D打印"></a>3D打印</h2>&emsp;&emsp;<a target="_blank" rel="noopener" href="https://makerworld.com/zh/models/463622#profileId-372189">摄像头支架模型</a></li>
+</ol>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://dikle-ovo.github.io">黄俊刚</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://dikle-ovo.github.io/2025/02/20/Graduation-Design/">https://dikle-ovo.github.io/2025/02/20/Graduation-Design/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://dikle-ovo.github.io" target="_blank">DIKLE | 记录</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E8%AE%B0%E5%BD%95/">记录</a></div><div class="post_share"><div class="social-share" data-image="/2025/02/20/Graduation-Design/cover.png" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2024/11/16/Sky-photo/" title="Sky|影像"><img class="cover" src="/2024/11/16/Sky-photo/coverx.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Sky|影像</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/2024/05/20/Remi-Pi/" title="记录|瑞米派嵌入式Linux开发"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-20</div><div class="title">记录|瑞米派嵌入式Linux开发</div></div></a></div><div><a href="/2024/05/24/tspi/" title="记录|泰山嵌入式Linux开发"><div class="cover" style="background: var(--default-bg-color)"></div><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-24</div><div class="title">记录|泰山嵌入式Linux开发</div></div></a></div><div><a href="/2024/05/16/visual_module/" title="记录|一些使用过的图形处理"><img class="cover" src="/2024/05/16/visual_module/cover.png" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2024-05-16</div><div class="title">记录|一些使用过的图形处理</div></div></a></div></div></div></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/my_img/cat.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">黄俊刚</div><div class="author-info__description">这是一个个人博客嗷</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">23</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">12</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Dikle-OvO"><i class="fab fa-github"></i><span>Github主页</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#MaixCam"><span class="toc-number">2.</span> <span class="toc-text">MaixCam</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%86%E8%A7%89%E8%BF%BD%E8%B8%AA"><span class="toc-number">2.1.</span> <span class="toc-text">视觉追踪</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%AE%E6%A0%87%E6%B5%8B%E8%B7%9D"><span class="toc-number">2.2.</span> <span class="toc-text">目标测距</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/2025/02/20/Graduation-Design/" title="记录|智能视觉人体追随"><img src="/2025/02/20/Graduation-Design/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记录|智能视觉人体追随"/></a><div class="content"><a class="title" href="/2025/02/20/Graduation-Design/" title="记录|智能视觉人体追随">记录|智能视觉人体追随</a><time datetime="2025-02-20T04:40:36.000Z" title="发表于 2025-02-20 12:40:36">2025-02-20</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/16/Sky-photo/" title="Sky|影像"><img src="/2024/11/16/Sky-photo/coverx.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Sky|影像"/></a><div class="content"><a class="title" href="/2024/11/16/Sky-photo/" title="Sky|影像">Sky|影像</a><time datetime="2024-11-16T11:36:58.000Z" title="发表于 2024-11-16 19:36:58">2024-11-16</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/11/Process-Control/" title="过程控制系统"><img src="/2024/11/11/Process-Control/cover.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="过程控制系统"/></a><div class="content"><a class="title" href="/2024/11/11/Process-Control/" title="过程控制系统">过程控制系统</a><time datetime="2024-11-11T05:17:32.000Z" title="发表于 2024-11-11 13:17:32">2024-11-11</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2024/11/04/Canmv/" title="韦东山Canmv|AIOT开发"><img src="/2024/11/04/Canmv/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="韦东山Canmv|AIOT开发"/></a><div class="content"><a class="title" href="/2024/11/04/Canmv/" title="韦东山Canmv|AIOT开发">韦东山Canmv|AIOT开发</a><time datetime="2024-11-04T09:19:17.000Z" title="发表于 2024-11-04 17:19:17">2024-11-04</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2024/07/08/cmake/" title="C/C++ | 构建">C/C++ | 构建</a><time datetime="2024-07-08T02:13:38.000Z" title="发表于 2024-07-08 10:13:38">2024-07-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2025 By 黄俊刚</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script async src="/js/title.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script></div></body></html>
