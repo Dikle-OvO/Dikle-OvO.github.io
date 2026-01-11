@@ -13,6 +13,33 @@
   transition-property: background, opacity, transform;
 }
 
+
+/* 修改 [BlogRoot]\source\css\custom.css */
+
+h1::before,
+h2::before,
+h3::before,
+h4::before,
+h5::before,
+h6::before {
+    /* --- 核心修复代码 START --- */
+    /* 强制指定使用 Font Awesome 6 Free 字体库 */
+    font-family: "Font Awesome 6 Free" !important;
+    /* 必须加粗为 900，否则实心图标无法显示，会变成乱码 */
+    font-weight: 900 !important;
+    /* --- 核心修复代码 END --- */
+
+    /* 保持教程原有的动画设置 */
+    -webkit-animation: ccc 4s linear infinite;
+    animation: ccc 4s linear infinite;
+}
+
+/* 确保你也有这段定义动画的关键帧代码（教程截图没截全，通常需要加上） */
+@keyframes ccc {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
 #cursor.hidden {
   opacity: 0;
 }
