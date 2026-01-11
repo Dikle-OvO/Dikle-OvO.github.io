@@ -14,31 +14,36 @@
 }
 
 
-/* 修改 [BlogRoot]\source\css\custom.css */
-
+/* 完美修复风车显示 & 旋转特效 */
 h1::before,
 h2::before,
 h3::before,
 h4::before,
 h5::before,
 h6::before {
-    /* --- 核心修复代码 START --- */
-    /* 强制指定使用 Font Awesome 6 Free 字体库 */
-    font-family: "Font Awesome 6 Free" !important;
-    /* 必须加粗为 900，否则实心图标无法显示，会变成乱码 */
+    /* 1. 强制使用 Font Awesome 字体库 (同时兼容 v5 和 v6) */
+    font-family: "Font Awesome 6 Free", "Font Awesome 5 Free" !important;
+    
+    /* 2. 【关键】必须强制加粗到 900，否则风车(\f863)不显示！ */
     font-weight: 900 !important;
-    /* --- 核心修复代码 END --- */
-
-    /* 保持教程原有的动画设置 */
+    
+    /* 3. 消除中文字体的干扰 */
+    font-style: normal !important;
+    
+    /* 4. 调整一下图标颜色和间距，稍微好看点 */
+    margin-right: 8px;
+    
+    /* 5. 旋转动画 */
     -webkit-animation: ccc 4s linear infinite;
     animation: ccc 4s linear infinite;
 }
 
-/* 确保你也有这段定义动画的关键帧代码（教程截图没截全，通常需要加上） */
+/* 旋转动画定义 */
 @keyframes ccc {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
+
 
 #cursor.hidden {
   opacity: 0;
