@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>墨水屏串口传图控制端</title>
+    <!-- 引入 Tailwind CSS (CDN) 用于快速样式化 -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* 保证点阵图放大时边缘锐利不模糊 */
+        canvas { image-rendering: pixelated; }
+        /* 隐藏原生文件输入框 */
+        #file-input { display: none; }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans min-h-screen p-6">
+
+<div class="max-w-6xl mx-auto space-y-6">
+    
+    <!-- 头部区域 -->
+    <div class="bg-white rounded-xl p-6 shadow-sm flex items-center justify-between">
+        <div class="flex items-center space-x-4">
+            <svg class="h-8 w-8 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+            </svg>
+            <div>
+                <h1 class="text-2xl font-bold text-gray-800">墨水屏串口传图控制端</h1>
+                <p class="text-sm text-gray-500">1-bit Dithered Binary E-Ink Flesher (Vanilla JS)</p>
+            </div>
+        </div>
+        <div class="flex items-center space-x-2">
+            <div id="status-dot" class="h-3 w-3 rounded-full bg-red-500"></div>
+            <span id="status-text" class="text-sm font-medium text-gray-600">串口未连接</span>
+        </div>
+    </div>
+
+    <!-- 浏览器不支持 Web Serial 时的提示 -->
+    <div id="unsupported-alert" class="hidden bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+        <strong class="font-bold">浏览器不支持!</strong>
+        <span class="block sm:inline">您的浏览器不支持 Web Serial API。请使用基于 Chromium 的浏览器（如 Chrome/Edge）并在 HTTPS 或 Localhost 下运行。</span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6" id="main-content">
+        <!-- 左侧控制面板 -->
+        <div class="space-y-6 lg:col-span-1">
+            
+            <!-- 第一步：上传图片 -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
+                    第一步：选择图片
+                </h2>
+                <div id="drop-zone" class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors">
+                    <input type="file" id="file-input" accept="image/png, image/jpeg, image/bmp">
+                    <svg class="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                    <p class="text-sm text-gray-600">点击上传 PNG/JPG/BMP</p>
+                    <p id="original-size" class="text-xs text-blue-600 mt-2 hidden"></p>
+                </div>
+            </div>
+
+            <!-- 第二步：目标参数 -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
+                    第二步：目标参数
+                </h2>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">目标 X 坐标</label>
+                        <input type="number" id="targetX" value="0" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">目标 Y 坐标</label>
+                        <input type="number" id="targetY" value="0" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">目标宽度 (Width)</label>
+                        <input type="number" id="targetW" value="200" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">目标高度 (Height)</label>
+                        <input type="number" id="targetH" value="200" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:border-blue-500">
+                    </div>
+                </div>
+            </div>
+
+            <!-- 第三步：串口操作 -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
+                    <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+                    第三步：串口操作
+                </h2>
+                <div class="mb-4">
+                    <label class="block text-xs font-medium text-gray-600 mb-1">波特率 (Baud Rate)</label>
+                    <select id="baudRate" class="w-full border border-gray-300 rounded-md p-2 text-sm focus:outline-none focus:border-blue-500">
+                        <option value="9600">9600</option>
+                        <option value="115200" selected>115200</option>
+                        <option value="250000">250000</option>
+                    </select>
+                </div>
+                <div class="space-y-3">
+                    <button id="btn-connect" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-medium py-2.5 rounded-md text-sm transition-colors flex items-center justify-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg> 连接设备串口
+                    </button>
+                    <button id="btn-disconnect" class="hidden w-full bg-red-50 hover:bg-red-100 border border-red-500 text-red-600 font-medium py-2.5 rounded-md text-sm transition-colors flex items-center justify-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 断开连接
+                    </button>
+                    <button id="btn-send" disabled class="w-full bg-gray-400 cursor-not-allowed text-white font-medium py-2.5 rounded-md text-sm transition-colors flex items-center justify-center">
+                        <svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg> 发送数据到屏幕
+                    </button>
+                    <button id="btn-cancel" class="hidden w-full bg-red-600 hover:bg-red-700 text-white font-medium py-2.5 rounded-md text-sm transition-colors flex items-center justify-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> 终止发送
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- 右侧画布与日志 -->
+        <div class="space-y-6 lg:col-span-2">
+            
+            <!-- 画布预览 -->
+            <div class="bg-white rounded-xl p-6 shadow-sm">
+                <div class="flex justify-between items-center mb-4">
+                    <h2 class="text-lg font-semibold text-gray-800 flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                        实时渲染预览 (1-bit Dithered)
+                    </h2>
+                    <button id="btn-download" class="hidden text-sm text-blue-600 hover:text-blue-800 font-medium flex items-center">
+                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+                        下载 Raw Bin
+                    </button>
+                </div>
+                
+                <div class="bg-gray-100 border rounded-lg p-4 min-h-[300px] flex justify-center items-center overflow-auto">
+                    <p id="preview-placeholder" class="text-gray-400">请先在左侧上传图片</p>
+                    <canvas id="canvas" class="border shadow-sm max-w-full hidden"></canvas>
+                </div>
+                <p class="text-xs text-gray-500 mt-3">* 预览图展示处理后的黑白像素点阵。系统内部已完成反相处理（黑色=1，白色=0）并打包为二进制。</p>
+            </div>
+
+            <!-- 日志终端 -->
+            <div class="bg-gray-900 rounded-xl shadow-sm flex flex-col" style="height: 280px;">
+                <div class="bg-gray-800 px-4 py-2 border-b border-gray-700 flex justify-between items-center">
+                    <span class="text-sm font-medium text-gray-300 flex items-center">
+                        <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l3 3-3 3m5 0h3M5 20h14a2 2 0 002-2V6a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+                        终端交互日志
+                    </span>
+                    <button id="btn-clear-log" class="text-xs text-gray-500 hover:text-gray-300">清空日志</button>
+                </div>
+                <div id="log-container" class="flex-1 p-4 overflow-y-auto font-mono text-xs text-gray-300">
+                    <p class="text-gray-600" id="log-placeholder">暂无日志...</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 检查 Web Serial API 支持情况
+    if (!('serial' in navigator)) {
+        document.getElementById('unsupported-alert').classList.remove('hidden');
+        document.getElementById('main-content').classList.add('opacity-50', 'pointer-events-none');
+        return;
+    }
+
+    // --- 全局状态 ---
+    let currentImage = null;
+    let binaryData = null;
+    let port = null;
+    let reader = null;
+    let incomingBuffer = "";
+    let isSending = false;
+    let keepReading = false;
+
+    // --- DOM 元素引用 ---
+    const dropZone = document.getElementById('drop-zone');
+    const fileInput = document.getElementById('file-input');
+    const originalSizeText = document.getElementById('original-size');
+    const inputX = document.getElementById('targetX');
+    const inputY = document.getElementById('targetY');
+    const inputW = document.getElementById('targetW');
+    const inputH = document.getElementById('targetH');
+    const inputBaud = document.getElementById('baudRate');
+    
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+    const previewPlaceholder = document.getElementById('preview-placeholder');
+    
+    const btnConnect = document.getElementById('btn-connect');
+    const btnDisconnect = document.getElementById('btn-disconnect');
+    const btnSend = document.getElementById('btn-send');
+    const btnCancel = document.getElementById('btn-cancel');
+    const btnDownload = document.getElementById('btn-download');
+    
+    const statusDot = document.getElementById('status-dot');
+    const statusText = document.getElementById('status-text');
+    const logContainer = document.getElementById('log-container');
+    const logPlaceholder = document.getElementById('log-placeholder');
+
+    // --- 日志系统 ---
+    function addLog(msg, type = 'info') {
+        if (logPlaceholder) logPlaceholder.style.display = 'none';
+        const time = new Date().toLocaleTimeString();
+        const div = document.createElement('div');
+        div.className = 'mb-1';
+        
+        if (type === 'error') div.classList.add('text-red-400');
+        else if (type === 'success') div.classList.add('text-green-400');
+        else if (type === 'warn') div.classList.add('text-yellow-400');
+        else div.classList.add('text-blue-200');
+
+        div.innerHTML = `<span class="opacity-50 mr-2">[${time}]</span>${msg}`;
+        logContainer.appendChild(div);
+        logContainer.scrollTop = logContainer.scrollHeight;
+    }
+
+    document.getElementById('btn-clear-log').addEventListener('click', () => {
+        logContainer.innerHTML = '';
+    });
+
+    // --- 图像处理核心算法 (重构自 React 版本) ---
+    function processImage() {
+        if (!currentImage) return;
+
+        const targetW = parseInt(inputW.value);
+        const targetH = parseInt(inputH.value);
+        if (targetW <= 0 || targetH <= 0) return;
+
+        // 设置画布尺寸 (步骤1: 强制缩放)
+        canvas.width = targetW;
+        canvas.height = targetH;
+        
+        // 步骤2: 透明度处理 (垫一层白底)
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, targetW, targetH);
+        ctx.drawImage(currentImage, 0, 0, targetW, targetH);
+
+        const imageData = ctx.getImageData(0, 0, targetW, targetH);
+        const data = imageData.data;
+
+        // 步骤3: 灰度化
+        for (let i = 0; i < data.length; i += 4) {
+            const gray = 0.299 * data[i] + 0.587 * data[i+1] + 0.114 * data[i+2];
+            data[i] = data[i+1] = data[i+2] = gray;
+        }
+
+        // 步骤5: Floyd-Steinberg 抖动二值化 (0黑, 255白 用于预览)
+        for (let y = 0; y < targetH; y++) {
+            for (let x = 0; x < targetW; x++) {
+                const i = (y * targetW + x) * 4;
+                const oldVal = data[i];
+                const newVal = oldVal < 128 ? 0 : 255;
+                
+                data[i] = data[i+1] = data[i+2] = newVal;
+                const err = oldVal - newVal;
+
+                const addErr = (idx, amount) => {
+                    if (idx >= 0 && idx < data.length) {
+                        const val = data[idx] + amount;
+                        data[idx] = data[idx+1] = data[idx+2] = Math.min(255, Math.max(0, val));
+                    }
+                };
+
+                if (x + 1 < targetW) addErr(i + 4, err * 7 / 16);
+                if (y + 1 < targetH) {
+                    if (x - 1 >= 0) addErr(i + (targetW - 1) * 4, err * 3 / 16);
+                    addErr(i + targetW * 4, err * 5 / 16);
+                    if (x + 1 < targetW) addErr(i + (targetW + 1) * 4, err * 1 / 16);
+                }
+            }
+        }
+
+        // 更新画布显示预览
+        ctx.putImageData(imageData, 0, 0);
+        previewPlaceholder.classList.add('hidden');
+        canvas.classList.remove('hidden');
+
+        // 步骤4&6: 反相并提取二进制流 (1有色/黑, 0无色/白)
+        const byteWidth = Math.floor((targetW + 7) / 8);
+        const buffer = new Uint8Array(byteWidth * targetH);
+
+        for (let y = 0; y < targetH; y++) {
+            for (let x = 0; x < targetW; x++) {
+                const i = (y * targetW + x) * 4;
+                // data[i] 此时是 0(黑) 或 255(白)
+                const bit = data[i] === 0 ? 1 : 0; 
+                
+                const byteIdx = y * byteWidth + Math.floor(x / 8);
+                const bitPos = 7 - (x % 8); // MSB
+                buffer[byteIdx] |= (bit << bitPos);
+            }
+        }
+        
+        binaryData = buffer;
+        btnDownload.classList.remove('hidden');
+        updateSendButtonState();
+    }
+
+    // --- 文件上传处理 ---
+    dropZone.addEventListener('click', () => fileInput.click());
+    
+    fileInput.addEventListener('change', (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const img = new Image();
+                img.onload = () => {
+                    currentImage = img;
+                    // 自动填入原图尺寸
+                    inputW.value = img.width;
+                    inputH.value = img.height;
+                    originalSizeText.textContent = `原图尺寸: ${img.width} x ${img.height}`;
+                    originalSizeText.classList.remove('hidden');
+                    addLog(`图片已加载: ${file.name} (${img.width}x${img.height})`, 'success');
+                    processImage();
+                };
+                img.src = event.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+
+    // 监听参数改变，重新处理图像
+    [inputW, inputH].forEach(input => {
+        input.addEventListener('change', processImage);
+    });
+
+    // --- 串口交互逻辑 ---
+    function updateSendButtonState() {
+        if (port && binaryData && !isSending) {
+            btnSend.disabled = false;
+            btnSend.classList.remove('bg-gray-400', 'cursor-not-allowed');
+            btnSend.classList.add('bg-green-600', 'hover:bg-green-700');
+            btnSend.innerHTML = `<svg class="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM9.555 7.168A1 1 0 008 8v4a1 1 0 001.555.832l3-2a1 1 0 000-1.664l-3-2z" clip-rule="evenodd"></path></svg> 发送数据到屏幕 (${binaryData.length} B)`;
+        } else {
+            btnSend.disabled = true;
+            btnSend.classList.add('bg-gray-400', 'cursor-not-allowed');
+            btnSend.classList.remove('bg-green-600', 'hover:bg-green-700');
+        }
+    }
+
+    async function readLoop() {
+        keepReading = true;
+        while (port && port.readable && keepReading) {
+            reader = port.readable.getReader();
+            const decoder = new TextDecoder();
+            try {
+                while (true) {
+                    const { value, done } = await reader.read();
+                    if (done) break;
+                    incomingBuffer += decoder.decode(value, { stream: true });
+                }
+            } catch (error) {
+                addLog(`读取流断开或错误: ${error.message}`, 'error');
+            } finally {
+                reader.releaseLock();
+            }
+        }
+    }
+
+    btnConnect.addEventListener('click', async () => {
+        try {
+            port = await navigator.serial.requestPort();
+            const baudRate = parseInt(inputBaud.value);
+            await port.open({ baudRate: baudRate });
+            
+            statusDot.classList.replace('bg-red-500', 'bg-green-500');
+            statusText.textContent = '串口已连接';
+            addLog(`串口已连接，波特率: ${baudRate}`, 'success');
+            
+            btnConnect.classList.add('hidden');
+            btnDisconnect.classList.remove('hidden');
+            inputBaud.disabled = true;
+            
+            updateSendButtonState();
+            readLoop(); // 启动后台监听
+
+        } catch (err) {
+            addLog(`串口连接失败: ${err.message}`, 'error');
+        }
+    });
+
+    btnDisconnect.addEventListener('click', async () => {
+        keepReading = false;
+        if (reader) {
+            await reader.cancel();
+        }
+        if (port) {
+            await port.close();
+            port = null;
+            
+            statusDot.classList.replace('bg-green-500', 'bg-red-500');
+            statusText.textContent = '串口未连接';
+            addLog('串口已断开');
+            
+            btnDisconnect.classList.add('hidden');
+            btnConnect.classList.remove('hidden');
+            inputBaud.disabled = false;
+            updateSendButtonState();
+        }
+    });
+
+    // 阻塞等待特定的字符串回复
+    function waitForString(targetStr, timeoutMs = 15000) {
+        return new Promise((resolve, reject) => {
+            const timeout = setTimeout(() => reject(new Error(`等待超时: 寻找 "${targetStr}"`)), timeoutMs);
+            
+            const checkBuffer = () => {
+                if (!isSending) {
+                    clearTimeout(timeout);
+                    return reject(new Error("操作已被用户取消"));
+                }
+                
+                if (incomingBuffer.includes(targetStr)) {
+                    clearTimeout(timeout);
+                    const idx = incomingBuffer.indexOf(targetStr);
+                    // 清空匹配到的以及之前的字符
+                    incomingBuffer = incomingBuffer.substring(idx + targetStr.length);
+                    resolve();
+                } else if (incomingBuffer.includes("ERROR:")) {
+                    clearTimeout(timeout);
+                    reject(new Error("收到下位机 ERROR 反馈"));
+                } else {
+                    requestAnimationFrame(checkBuffer);
+                }
+            };
+            checkBuffer();
+        });
+    }
+
+    btnSend.addEventListener('click', async () => {
+        if (!port || !binaryData) return;
+        
+        isSending = true;
+        btnSend.classList.add('hidden');
+        btnCancel.classList.remove('hidden');
+        btnDisconnect.disabled = true;
+        incomingBuffer = ""; // 清空缓冲区
+
+        try {
+            const targetX = inputX.value;
+            const targetY = inputY.value;
+            const targetW = inputW.value;
+            const targetH = inputH.value;
+
+            // 1. 等待复位 (针对带 USB 原生的板子如 ESP32-S3/Arduino Leonardo)
+            addLog("正在重置下位机，等待 2 秒...");
+            await new Promise(r => setTimeout(r, 2000));
+
+            // 2. 发送指令头
+            const header = `DRAW:${targetX},${targetY},${targetW},${targetH}:`;
+            addLog(`发送指令头: ${header}`);
+            
+            // 注意：要先让 reader 释放锁定才能写入，但是我们在读循环里处理了
+            const textEncoder = new TextEncoder();
+            const writer = port.writable.getWriter();
+            await writer.write(textEncoder.encode(header));
+            writer.releaseLock();
+            
+            // 3. 等待 READY
+            addLog("等待下位机就绪 (READY)...");
+            await waitForString("READY:");
+
+            // 4. 发送二进制流
+            const binWriter = port.writable.getWriter();
+            addLog(`开始发送二进制图像流 (${binaryData.length} 字节)...`);
+            
+            const chunkSize = 1024;
+            for (let i = 0; i < binaryData.length; i += chunkSize) {
+                if (!isSending) throw new Error("发送已终止");
+                await binWriter.write(binaryData.slice(i, i + chunkSize));
+            }
+            binWriter.releaseLock();
+
+            // 5. 等待 Done!
+            addLog("数据发送完毕，等待下位机刷新屏幕 (Done!)...");
+            await waitForString("Done!", 60000); // 墨水屏刷新慢
+
+            addLog("✅ 传图任务圆满完成！", 'success');
+
+        } catch (err) {
+            addLog(`❌ 发送中止: ${err.message}`, 'error');
+        } finally {
+            isSending = false;
+            btnCancel.classList.add('hidden');
+            btnSend.classList.remove('hidden');
+            btnDisconnect.disabled = false;
+            updateSendButtonState();
+        }
+    });
+
+    btnCancel.addEventListener('click', () => {
+        isSending = false;
+        addLog("用户已主动取消发送任务", 'warn');
+    });
+
+    // 下载二进制文件用于调试
+    btnDownload.addEventListener('click', () => {
+        if (!binaryData) return;
+        const targetW = inputW.value;
+        const targetH = inputH.value;
+        const blob = new Blob([binaryData], { type: "application/octet-stream" });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `eink_${targetW}x${targetH}.bin`;
+        a.click();
+        URL.revokeObjectURL(url);
+        addLog(`已下载生成的二进制调试文件 (eink_${targetW}x${targetH}.bin)`);
+    });
+
+});
+</script>
+</body>
+</html>
