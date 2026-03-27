@@ -44,17 +44,47 @@
         <!-- 左侧控制面板 -->
         <div class="space-y-6 lg:col-span-1">
             
-            <!-- 第一步：上传图片 -->
+            <!-- 第一步：数据源 -->
             <div class="bg-white rounded-xl p-6 shadow-sm">
                 <h2 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
                     <svg class="w-5 h-5 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12"></path></svg>
-                    第一步：选择图片
+                    第一步：内容源
                 </h2>
-                <div id="drop-zone" class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors">
-                    <input type="file" id="file-input" accept="image/png, image/jpeg, image/bmp">
-                    <svg class="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
-                    <p class="text-sm text-gray-600">点击上传 PNG/JPG/BMP</p>
-                    <p id="original-size" class="text-xs text-blue-600 mt-2 hidden"></p>
+                
+                <!-- 模式切换 Tabs -->
+                <div class="flex space-x-2 mb-4">
+                    <button id="tab-image" class="flex-1 py-2 text-sm font-medium bg-blue-50 text-blue-600 rounded-md transition-colors">上传图片</button>
+                    <button id="tab-draw" class="flex-1 py-2 text-sm font-medium bg-gray-50 text-gray-600 hover:bg-gray-100 rounded-md transition-colors">手绘涂鸦</button>
+                </div>
+
+                <!-- 上传图片模式 UI -->
+                <div id="image-ui">
+                    <div id="drop-zone" class="relative border-2 border-dashed border-gray-300 rounded-lg p-6 bg-gray-50 flex flex-col items-center justify-center cursor-pointer hover:bg-gray-100 transition-colors">
+                        <input type="file" id="file-input" accept="image/png, image/jpeg, image/bmp">
+                        <svg class="w-10 h-10 text-gray-400 mb-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"></path></svg>
+                        <p class="text-sm text-gray-600">点击上传 PNG/JPG/BMP</p>
+                        <p id="original-size" class="text-xs text-blue-600 mt-2 hidden"></p>
+                    </div>
+                </div>
+
+                <!-- 画板模式 UI -->
+                <div id="draw-ui" class="hidden space-y-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-2">画笔颜色</label>
+                        <div class="flex space-x-3">
+                            <button id="color-black" class="w-8 h-8 rounded-full bg-black border-2 border-blue-500 shadow-sm"></button>
+                            <button id="color-white" class="w-8 h-8 rounded-full bg-white border-2 border-gray-300 shadow-sm"></button>
+                            <span class="text-xs text-gray-400 self-center ml-2">墨水屏仅支持黑白两色</span>
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-600 mb-1">画笔粗细: <span id="brush-size-val">4</span>px</label>
+                        <input type="range" id="brush-size" min="1" max="30" value="4" class="w-full accent-blue-600">
+                    </div>
+                    <button id="btn-clear-canvas" class="w-full bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium py-2 rounded-md text-sm transition-colors border border-gray-200">
+                        <svg class="w-4 h-4 inline-block mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"></path></svg>
+                        清空画板
+                    </button>
                 </div>
             </div>
 
@@ -174,8 +204,26 @@ document.addEventListener('DOMContentLoaded', () => {
     let isSending = false;
     let keepReading = false;
 
+    // --- 模式与画板状态 ---
+    let currentMode = 'image'; // 'image' 或 'draw'
+    let isDrawing = false;
+    let drawColor = '#000000';
+    let drawSize = 4;
+    let lastX = 0;
+    let lastY = 0;
+
     // --- DOM 元素引用 ---
     const dropZone = document.getElementById('drop-zone');
+    const imageUi = document.getElementById('image-ui');
+    const drawUi = document.getElementById('draw-ui');
+    const tabImage = document.getElementById('tab-image');
+    const tabDraw = document.getElementById('tab-draw');
+    const colorBlack = document.getElementById('color-black');
+    const colorWhite = document.getElementById('color-white');
+    const brushSize = document.getElementById('brush-size');
+    const brushSizeVal = document.getElementById('brush-size-val');
+    const btnClearCanvas = document.getElementById('btn-clear-canvas');
+
     const fileInput = document.getElementById('file-input');
     const originalSizeText = document.getElementById('original-size');
     const inputX = document.getElementById('targetX');
@@ -220,8 +268,46 @@ document.addEventListener('DOMContentLoaded', () => {
         logContainer.innerHTML = '';
     });
 
+    // --- 提取二进制数据与更新视图 ---
+    function extractBinaryFromCanvas() {
+        const targetW = parseInt(inputW.value);
+        const targetH = parseInt(inputH.value);
+        if (targetW <= 0 || targetH <= 0) return;
+
+        const imageData = ctx.getImageData(0, 0, targetW, targetH);
+        const data = imageData.data;
+        const byteWidth = Math.floor((targetW + 7) / 8);
+        const buffer = new Uint8Array(byteWidth * targetH);
+
+        for (let y = 0; y < targetH; y++) {
+            for (let x = 0; x < targetW; x++) {
+                const i = (y * targetW + x) * 4;
+                // 对于画笔产生的平滑边缘，以 128 为界限进行简单二值化
+                const isBlack = (data[i] + data[i+1] + data[i+2]) / 3 < 128;
+                
+                // 反相：1为有色(黑), 0为无色(白)
+                const bit = isBlack ? 1 : 0; 
+                
+                const byteIdx = y * byteWidth + Math.floor(x / 8);
+                const bitPos = 7 - (x % 8); // MSB
+                buffer[byteIdx] |= (bit << bitPos);
+            }
+        }
+        
+        binaryData = buffer;
+        btnDownload.classList.remove('hidden');
+        updateSendButtonState();
+        previewPlaceholder.classList.add('hidden');
+        canvas.classList.remove('hidden');
+    }
+
     // --- 图像处理核心算法 (重构自 React 版本) ---
     function processImage() {
+        if (currentMode === 'draw') {
+            extractBinaryFromCanvas();
+            return;
+        }
+
         if (!currentImage) return;
 
         const targetW = parseInt(inputW.value);
@@ -272,31 +358,139 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         }
 
-        // 更新画布显示预览
+        // 更新画布显示预览并提取字节
         ctx.putImageData(imageData, 0, 0);
-        previewPlaceholder.classList.add('hidden');
-        canvas.classList.remove('hidden');
-
-        // 步骤4&6: 反相并提取二进制流 (1有色/黑, 0无色/白)
-        const byteWidth = Math.floor((targetW + 7) / 8);
-        const buffer = new Uint8Array(byteWidth * targetH);
-
-        for (let y = 0; y < targetH; y++) {
-            for (let x = 0; x < targetW; x++) {
-                const i = (y * targetW + x) * 4;
-                // data[i] 此时是 0(黑) 或 255(白)
-                const bit = data[i] === 0 ? 1 : 0; 
-                
-                const byteIdx = y * byteWidth + Math.floor(x / 8);
-                const bitPos = 7 - (x % 8); // MSB
-                buffer[byteIdx] |= (bit << bitPos);
-            }
-        }
-        
-        binaryData = buffer;
-        btnDownload.classList.remove('hidden');
-        updateSendButtonState();
+        extractBinaryFromCanvas();
     }
+
+    // --- 画板功能实现 ---
+    function initBlankCanvas() {
+        const targetW = parseInt(inputW.value);
+        const targetH = parseInt(inputH.value);
+        if (targetW <= 0 || targetH <= 0) return;
+        canvas.width = targetW;
+        canvas.height = targetH;
+        ctx.fillStyle = '#FFFFFF';
+        ctx.fillRect(0, 0, targetW, targetH);
+        extractBinaryFromCanvas();
+    }
+
+    function getCanvasCoordinates(e) {
+        const rect = canvas.getBoundingClientRect();
+        const clientX = e.touches ? e.touches[0].clientX : e.clientX;
+        const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+        const scaleX = canvas.width / rect.width;
+        const scaleY = canvas.height / rect.height;
+        return {
+            x: (clientX - rect.left) * scaleX,
+            y: (clientY - rect.top) * scaleY
+        };
+    }
+
+    function startDrawing(e) {
+        if (currentMode !== 'draw') return;
+        e.preventDefault();
+        isDrawing = true;
+        const pos = getCanvasCoordinates(e);
+        lastX = pos.x;
+        lastY = pos.y;
+        
+        ctx.beginPath();
+        ctx.fillStyle = drawColor;
+        ctx.arc(lastX, lastY, drawSize / 2, 0, Math.PI * 2);
+        ctx.fill();
+    }
+
+    function draw(e) {
+        if (!isDrawing || currentMode !== 'draw') return;
+        e.preventDefault();
+        const pos = getCanvasCoordinates(e);
+        
+        ctx.beginPath();
+        ctx.moveTo(lastX, lastY);
+        ctx.lineTo(pos.x, pos.y);
+        ctx.strokeStyle = drawColor;
+        ctx.lineWidth = drawSize;
+        ctx.lineCap = 'round';
+        ctx.lineJoin = 'round';
+        ctx.stroke();
+        
+        lastX = pos.x;
+        lastY = pos.y;
+    }
+
+    function stopDrawing() {
+        if (!isDrawing) return;
+        isDrawing = false;
+        extractBinaryFromCanvas(); // 落笔结束，提取最新的二进制流
+    }
+
+    // 画布绘制事件
+    canvas.addEventListener('mousedown', startDrawing);
+    canvas.addEventListener('mousemove', draw);
+    canvas.addEventListener('mouseup', stopDrawing);
+    canvas.addEventListener('mouseout', stopDrawing);
+    
+    canvas.addEventListener('touchstart', startDrawing, { passive: false });
+    canvas.addEventListener('touchmove', draw, { passive: false });
+    canvas.addEventListener('touchend', stopDrawing);
+    canvas.addEventListener('touchcancel', stopDrawing);
+
+    // --- 选项卡与工具栏逻辑 ---
+    tabImage.addEventListener('click', () => {
+        currentMode = 'image';
+        tabImage.classList.replace('bg-gray-50', 'bg-blue-50');
+        tabImage.classList.replace('text-gray-600', 'text-blue-600');
+        tabDraw.classList.replace('bg-blue-50', 'bg-gray-50');
+        tabDraw.classList.replace('text-blue-600', 'text-gray-600');
+        
+        imageUi.classList.remove('hidden');
+        drawUi.classList.add('hidden');
+        canvas.style.cursor = 'default';
+        canvas.style.touchAction = 'auto';
+        
+        processImage(); 
+    });
+
+    tabDraw.addEventListener('click', () => {
+        currentMode = 'draw';
+        tabDraw.classList.replace('bg-gray-50', 'bg-blue-50');
+        tabDraw.classList.replace('text-gray-600', 'text-blue-600');
+        tabImage.classList.replace('bg-blue-50', 'bg-gray-50');
+        tabImage.classList.replace('text-blue-600', 'text-gray-600');
+        
+        imageUi.classList.add('hidden');
+        drawUi.classList.remove('hidden');
+        canvas.style.cursor = 'crosshair';
+        canvas.style.touchAction = 'none'; // 防止移动端触控页面滚动
+        
+        initBlankCanvas(); 
+    });
+
+    colorBlack.addEventListener('click', () => {
+        drawColor = '#000000';
+        colorBlack.classList.add('border-blue-500');
+        colorWhite.classList.remove('border-blue-500');
+        colorWhite.classList.add('border-gray-300');
+    });
+
+    colorWhite.addEventListener('click', () => {
+        drawColor = '#FFFFFF';
+        colorWhite.classList.add('border-blue-500');
+        colorWhite.classList.remove('border-gray-300');
+        colorBlack.classList.remove('border-blue-500');
+        colorBlack.classList.add('border-gray-300');
+    });
+
+    brushSize.addEventListener('input', (e) => {
+        drawSize = e.target.value;
+        brushSizeVal.textContent = drawSize;
+    });
+
+    btnClearCanvas.addEventListener('click', () => {
+        initBlankCanvas();
+        addLog('画板已清空', 'info');
+    });
 
     // --- 文件上传处理 ---
     dropZone.addEventListener('click', () => fileInput.click());
@@ -323,9 +517,15 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // 监听参数改变，重新处理图像
+    // 监听参数改变，重新处理图像或调整画板
     [inputW, inputH].forEach(input => {
-        input.addEventListener('change', processImage);
+        input.addEventListener('change', () => {
+            if (currentMode === 'image') {
+                processImage();
+            } else {
+                initBlankCanvas();
+            }
+        });
     });
 
     // --- 串口交互逻辑 ---
