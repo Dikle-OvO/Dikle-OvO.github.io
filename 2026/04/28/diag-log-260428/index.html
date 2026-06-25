@@ -1,0 +1,217 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>记录|DCM 0x27服务 | DIKLE | 记录</title><meta name="author" content="黄俊刚"><meta name="copyright" content="黄俊刚"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="ffffff"><meta name="description" content="前言&amp;emsp;&amp;emsp;0x27 服务是 UDS（ISO 14229）标准中的安全访问服务，目的是防止未授权的诊断操作。采用 Seed-Key 挑战-应答机制：1234567891011121314151617181920Tester（上位机&#x2F;诊断仪）                    ECU（板子）       │">
+<meta property="og:type" content="article">
+<meta property="og:title" content="记录|DCM 0x27服务">
+<meta property="og:url" content="https://dikle-ovo.github.io/2026/04/28/diag-log-260428/index.html">
+<meta property="og:site_name" content="DIKLE | 记录">
+<meta property="og:description" content="前言&amp;emsp;&amp;emsp;0x27 服务是 UDS（ISO 14229）标准中的安全访问服务，目的是防止未授权的诊断操作。采用 Seed-Key 挑战-应答机制：1234567891011121314151617181920Tester（上位机&#x2F;诊断仪）                    ECU（板子）       │">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://dikle-ovo.github.io/my_img/cat.jpg">
+<meta property="article:published_time" content="2026-04-28T07:34:22.000Z">
+<meta property="article:modified_time" content="2026-04-28T08:40:14.315Z">
+<meta property="article:author" content="黄俊刚">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://dikle-ovo.github.io/my_img/cat.jpg"><link rel="shortcut icon" href="/my_img/cat.jpg"><link rel="canonical" href="https://dikle-ovo.github.io/2026/04/28/diag-log-260428/index.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = { 
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: undefined,
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":false,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: undefined,
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: true,
+  }
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '记录|DCM 0x27服务',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2026-04-28 16:40:14'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', 'ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><link rel="stylesheet" href="//at.alicdn.com/t/c/font_4475051_etb5xjltcej.css"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.loli.net/css2?family=Noto+Serif+SC:wght@400;500;700&display=swap" rel="stylesheet"><link href="https://fonts.loli.net/css2?family=Ma+Shan+Zheng:wght@400;500;700&display=swap" rel="stylesheet"><link rel="stylesheet" href="/css/custom.css" media="defer" onload="this.media='all'"><meta name="generator" content="Hexo 6.3.0"></head><body><div id="web_bg"></div><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/my_img/cat.jpg" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><hr/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fab fa-instagram"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tools"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/my-tools/photo-convert/"><i class="fa-fw fas fa-image"></i><span> 图片二值化</span></a></li><li><a class="site-page child" href="/my-tools/image-trans/"><i class="fa-fw fas fa-image"></i><span> 图片传输</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.bilibili.com"><i class="fa-fw fab fa-bilibili"></i><span> B站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.douban.com/people/Dikle/"><i class="fa-fw iconfont icon-douban"></i><span> 豆瓣</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/my_img/Top_banner.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="DIKLE | 记录"><img class="site-icon" src="/my_img/cat.jpg"/><span class="site-name">DIKLE | 记录</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 时间轴</span></a></div><div class="menus_item"><a class="site-page" href="/photos/"><i class="fa-fw fab fa-instagram"></i><span> 摄影</span></a></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-tools"></i><span> 工具</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" href="/my-tools/photo-convert/"><i class="fa-fw fas fa-image"></i><span> 图片二值化</span></a></li><li><a class="site-page child" href="/my-tools/image-trans/"><i class="fa-fw fas fa-image"></i><span> 图片传输</span></a></li></ul></div><div class="menus_item"><a class="site-page group" href="javascript:void(0);"><i class="fa-fw fas fa-list"></i><span> 生活</span><i class="fas fa-chevron-down"></i></a><ul class="menus_item_child"><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.bilibili.com"><i class="fa-fw fab fa-bilibili"></i><span> B站</span></a></li><li><a class="site-page child" target="_blank" rel="noopener" href="https://www.douban.com/people/Dikle/"><i class="fa-fw iconfont icon-douban"></i><span> 豆瓣</span></a></li></ul></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">记录|DCM 0x27服务</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2026-04-28T07:34:22.000Z" title="发表于 2026-04-28 15:34:22">2026-04-28</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2026-04-28T08:40:14.315Z" title="更新于 2026-04-28 16:40:14">2026-04-28</time></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-wordcount"><i class="far fa-file-word fa-fw post-meta-icon"></i><span class="post-meta-label">字数总计:</span><span class="word-count">783</span><span class="post-meta-separator">|</span><i class="far fa-clock fa-fw post-meta-icon"></i><span class="post-meta-label">阅读时长:</span><span>3分钟</span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>&emsp;&emsp;0x27 服务是 UDS（ISO 14229）标准中的安全访问服务，目的是防止未授权的诊断操作。采用 <code>Seed-Key 挑战-应答机制</code>：<br><figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">Tester（上位机/诊断仪）                    ECU（板子）</span><br><span class="line">       │                                      │</span><br><span class="line">       │  ① 27 03 (Request Seed, Level 3)     │</span><br><span class="line">       │─────────────────────────────────────→│</span><br><span class="line">       │                                      │  生成 16 字节随机 Seed</span><br><span class="line">       │  ② 67 03 [Seed_16B]                  │  保存 Seed 供后续比较</span><br><span class="line">       │←─────────────────────────────────────│</span><br><span class="line">       │                                      │</span><br><span class="line">       │  用 Seed + Secret Key                │</span><br><span class="line">       │  计算 HMAC-SHA1                      │</span><br><span class="line">       │  取前 16 字节作为 Key                 │</span><br><span class="line">       │                                      │</span><br><span class="line">       │  ③ 27 04 [Key_16B]                   │</span><br><span class="line">       │─────────────────────────────────────→│</span><br><span class="line">       │                                      │  用相同的 Seed + Secret Key</span><br><span class="line">       │                                      │  计算 HMAC-SHA1</span><br><span class="line">       │                                      │  比较结果是否一致</span><br><span class="line">       │  ④ 67 04 (Positive Response)         │</span><br><span class="line">       │←─────────────────────────────────────│</span><br><span class="line">       │                                      │  解锁对应安全等级</span><br></pre></td></tr></table></figure></p>
+<h1 id="逆向"><a href="#逆向" class="headerlink" title="逆向"></a>逆向</h1><h2 id="推测算法实现"><a href="#推测算法实现" class="headerlink" title="推测算法实现"></a>推测算法实现</h2><p>&emsp;&emsp;证据 1：头文件声明了完整的输入/输出规范<br>Crypto_30_SecAccessFord_Algo.h 是公开的，明确定义了：</p>
+<p>函数签名（参数类型、个数、含义）<br>输入长度（key=12, seed=16, mac=16/18）<br>输出（0=匹配，1=不匹配）<br>返回值（E_OK / E_NOT_OK）<br>接口契约是完全确定的。</p>
+<p>&emsp;&emsp;证据 2：数据结构暴露了算法身份</p>
+<h2 id="密钥提取"><a href="#密钥提取" class="headerlink" title="密钥提取"></a>密钥提取</h2><p>&emsp;&emsp;原理：原静态库（.a / .lib）不是加密文件，它就是一堆 .o 目标文件的打包，其中并没有任何加密。<br>&emsp;&emsp;静态库的格式和 .exe/.elf 一样，都是标准的 ELF（或 COFF）格式，里面分段存储：<br>段|内容|加密？<br>—-|—-|—-<br>.text|机器码（函数体）|❌ 明文<br>.rodata|只读数据（常量、字符串、密钥）|❌ 明文<br>.data|可读写全局变量|❌ 明文<br>.symtab|符号表（函数名、变量名）|❌ 明文</p>
+<h3 id="第一步：看库里有什么符号"><a href="#第一步：看库里有什么符号" class="headerlink" title="第一步：看库里有什么符号"></a>第一步：看库里有什么符号</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arm-none-eabi-nm -S libService27.a</span><br></pre></td></tr></table></figure>
+<p>nm = name list，列出所有符号。输出含义：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">00000000 0000000c R level01SecretKey</span><br><span class="line">         ↑地址    ↑大小12字节  ↑类型：R=只读数据(.rodata)</span><br></pre></td></tr></table></figure><br>符号类型标记：</p>
+<p>T = 代码段（函数），t = 局部函数<br>R = 只读数据，r = 局部只读数据<br>D = 可读写数据<br>U = 未定义（引用外部符号）</p>
+<h3 id="第二步：导出段内容（提取数据）"><a href="#第二步：导出段内容（提取数据）" class="headerlink" title="第二步：导出段内容（提取数据）"></a>第二步：导出段内容（提取数据）</h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">arm-none-eabi-objdump -s libService27.a</span><br></pre></td></tr></table></figure>
+<p>-s = 显示所有段的十六进制 dump。找到目标段：<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Contents of section .rodata.level01SecretKey:</span><br><span class="line"> 0000 11223344 55667788 99aabbcc           123123</span><br><span class="line">      ↑    ↑    ↑    ↑</span><br><span class="line">      每组4字节，这就是密钥的原始字节</span><br></pre></td></tr></table></figure><br>读法：11 22 33 44 55 66 77 88 99 aa bb cc = 12 字节密钥。右边是 ASCII 对照（不可打印字符显示为 .）。</p>
+<h1 id="代码实现"><a href="#代码实现" class="headerlink" title="代码实现"></a>代码实现</h1><p>&emsp;&emsp;各部分代码分析。</p>
+<h2 id="ECU端"><a href="#ECU端" class="headerlink" title="ECU端"></a>ECU端</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">UdsSecurityInit()                     ← canstack_init() 启动时调用</span><br><span class="line">  └─ SecurityCntInit()                ← 从 NV 读取失败计数</span><br><span class="line"></span><br><span class="line">get_security_seed(0x03, true)         ← 收到 27 03</span><br><span class="line">  └─ generate_random_seed(16B)        ← srand(ticks) + rand() 填充</span><br><span class="line">  └─ 返回 seed 指针</span><br><span class="line"></span><br><span class="line">compare_security_key(0x03, key, 16)   ← 收到 27 04</span><br><span class="line">  └─ get_security_seed(0x03, false)   ← 取回之前保存的 seed</span><br><span class="line">  └─ memcpy(data, seed, 16)</span><br><span class="line">  └─ memcpy(data+16, level03_salt, 4) ← 拼接 salt &quot;zaCK&quot;</span><br><span class="line">  └─ Algo_Level3()</span><br><span class="line">       └─ hmac_sha1_verify()</span><br><span class="line">            └─ mbedtls_md_hmac(SHA1, secret_key, data)  ← 计算 HMAC</span><br><span class="line">            └─ MemCmp(hmac_out, mac, 16)  ← 常量时间比较前 16 字节</span><br><span class="line">  └─ 返回 match/mismatch</span><br></pre></td></tr></table></figure>
+<h2 id="上位机端"><a href="#上位机端" class="headerlink" title="上位机端"></a>上位机端</h2><h2 id="整体逻辑"><a href="#整体逻辑" class="headerlink" title="整体逻辑"></a>整体逻辑</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line">上位机 (Tester/Python脚本)                          ECU (MSPM0G3519)</span><br><span class="line">═══════════════════════                          ═══════════════════</span><br><span class="line">        │                                                │</span><br><span class="line">        │  ① 10 03 (DiagnosticSessionControl)            │</span><br><span class="line">        │ ──────────────────────────────────────────────&gt; │</span><br><span class="line">        │                                                │  切换到 Extended Session</span><br><span class="line">        │                50 03 00 32 01 f4               │</span><br><span class="line">        │ &lt;────────────────────────────────────────────── │</span><br><span class="line">        │                                                │</span><br><span class="line">        │  ② 27 03 (RequestSeed, Level 03)               │</span><br><span class="line">        │ ──────────────────────────────────────────────&gt; │</span><br><span class="line">        │                                                │  generate_random_seed()</span><br><span class="line">        │                                                │  生成 16 字节随机 seed</span><br><span class="line">        │                                                │  保存到 se_seed[]</span><br><span class="line">        │           67 03 + seed[16B]                    │</span><br><span class="line">        │ &lt;────────────────────────────────────────────── │</span><br><span class="line">        │                                                │</span><br><span class="line">        │  ③ 上位机本地计算 Key                           │</span><br><span class="line">        │  ┌─────────────────────────────┐               │</span><br><span class="line">        │  │ data = seed ∥ salt(&quot;zaCK&quot;)  │               │</span><br><span class="line">        │  │      = 16 + 4 = 20 字节     │               │</span><br><span class="line">        │  │                             │               │</span><br><span class="line">        │  │ key = HMAC-SHA1(            │               │</span><br><span class="line">        │  │   secret_key[12B],          │               │</span><br><span class="line">        │  │   data[20B]                 │               │</span><br><span class="line">        │  │ )[:16]                      │               │</span><br><span class="line">        │  │ 取 SHA1 输出前 16 字节       │               │</span><br><span class="line">        │  └─────────────────────────────┘               │</span><br><span class="line">        │                                                │</span><br><span class="line">        │  ④ 27 04 + key[16B] (SendKey)                  │</span><br><span class="line">        │ ──────────────────────────────────────────────&gt; │</span><br><span class="line">        │                                                │  compare_security_key()</span><br><span class="line">        │                                                │  ┌─────────────────────────┐</span><br><span class="line">        │                                                │  │ 取出 se_seed[]           │</span><br><span class="line">        │                                                │  │ data = seed ∥ salt       │</span><br><span class="line">        │                                                │  │                         │</span><br><span class="line">        │                                                │  │ Algo_Level3():           │</span><br><span class="line">        │                                                │  │  expected = HMAC-SHA1(   │</span><br><span class="line">        │                                                │  │    secret_key, data      │</span><br><span class="line">        │                                                │  │  )[:16]                  │</span><br><span class="line">        │                                                │  │                         │</span><br><span class="line">        │                                                │  │ 常量时间比较:             │</span><br><span class="line">        │                                                │  │  key == expected ?       │</span><br><span class="line">        │                                                │  └─────────────────────────┘</span><br><span class="line">        │                 67 04 (正响应)                   │</span><br><span class="line">        │ &lt;────────────────────────────────────────────── │  解锁成功</span><br><span class="line">        │                                                │</span><br></pre></td></tr></table></figure></article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://dikle-ovo.github.io">黄俊刚</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://dikle-ovo.github.io/2026/04/28/diag-log-260428/">https://dikle-ovo.github.io/2026/04/28/diag-log-260428/</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://dikle-ovo.github.io" target="_blank">DIKLE | 记录</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"></div><div class="post_share"><div class="social-share" data-image="/my_img/cat.jpg" data-sites="facebook,twitter,wechat,weibo,qq"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="next-post pull-full"><a href="/2026/03/31/xiaozhi-learn/" title="小智|ESP32-c3"><div class="cover" style="background: var(--default-bg-color)"></div><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">小智|ESP32-c3</div></div></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/my_img/cat.jpg" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">黄俊刚</div><div class="author-info__description">这是一个个人博客嗷</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">28</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">13</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">0</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/Dikle-OvO"><i class="fab fa-github"></i><span>Github主页</span></a></div><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%80%86%E5%90%91"><span class="toc-number">2.</span> <span class="toc-text">逆向</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E6%B5%8B%E7%AE%97%E6%B3%95%E5%AE%9E%E7%8E%B0"><span class="toc-number">2.1.</span> <span class="toc-text">推测算法实现</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%86%E9%92%A5%E6%8F%90%E5%8F%96"><span class="toc-number">2.2.</span> <span class="toc-text">密钥提取</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%EF%BC%9A%E7%9C%8B%E5%BA%93%E9%87%8C%E6%9C%89%E4%BB%80%E4%B9%88%E7%AC%A6%E5%8F%B7"><span class="toc-number">2.2.1.</span> <span class="toc-text">第一步：看库里有什么符号</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%EF%BC%9A%E5%AF%BC%E5%87%BA%E6%AE%B5%E5%86%85%E5%AE%B9%EF%BC%88%E6%8F%90%E5%8F%96%E6%95%B0%E6%8D%AE%EF%BC%89"><span class="toc-number">2.2.2.</span> <span class="toc-text">第二步：导出段内容（提取数据）</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%A3%E7%A0%81%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.</span> <span class="toc-text">代码实现</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ECU%E7%AB%AF"><span class="toc-number">3.1.</span> <span class="toc-text">ECU端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%8A%E4%BD%8D%E6%9C%BA%E7%AB%AF"><span class="toc-number">3.2.</span> <span class="toc-text">上位机端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B4%E4%BD%93%E9%80%BB%E8%BE%91"><span class="toc-number">3.3.</span> <span class="toc-text">整体逻辑</span></a></li></ol></li></ol></div></div><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/04/28/diag-log-260428/" title="记录|DCM 0x27服务">记录|DCM 0x27服务</a><time datetime="2026-04-28T07:34:22.000Z" title="发表于 2026-04-28 15:34:22">2026-04-28</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/31/xiaozhi-learn/" title="小智|ESP32-c3">小智|ESP32-c3</a><time datetime="2026-03-31T03:24:20.000Z" title="发表于 2026-03-31 11:24:20">2026-03-31</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/03/20/Cloud-server/" title="关于云服务器">关于云服务器</a><time datetime="2026-03-20T07:26:52.000Z" title="发表于 2026-03-20 15:26:52">2026-03-20</time></div></div><div class="aside-list-item no-cover"><div class="content"><a class="title" href="/2026/01/17/Epaper/" title="Epaper电纸屏">Epaper电纸屏</a><time datetime="2026-01-17T09:00:45.000Z" title="发表于 2026-01-17 17:00:45">2026-01-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/2026/01/08/RF/" title="射频"><img src="/2026/01/08/RF/cover.png" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="射频"/></a><div class="content"><a class="title" href="/2026/01/08/RF/" title="射频">射频</a><time datetime="2026-01-08T08:06:55.000Z" title="发表于 2026-01-08 16:06:55">2026-01-08</time></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2023 - 2026 By 黄俊刚</div><div class="framework-info"><span>框架 </span><a target="_blank" rel="noopener" href="https://hexo.io">Hexo</a><span class="footer-separator">|</span><span>主题 </span><a target="_blank" rel="noopener" href="https://github.com/jerryc127/hexo-theme-butterfly">Butterfly</a></div><div class="footer_custom_text">I wish you to become your own sun, no need to rely on who's light.</div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><script>function panguFn () {
+  if (typeof pangu === 'object') pangu.autoSpacingPage()
+  else {
+    getScript('https://cdn.jsdelivr.net/npm/pangu/dist/browser/pangu.min.js')
+      .then(() => {
+        pangu.autoSpacingPage()
+      })
+  }
+}
+
+function panguInit () {
+  if (true){
+    GLOBAL_CONFIG_SITE.isPost && panguFn()
+  } else {
+    panguFn()
+  }
+}
+
+document.addEventListener('DOMContentLoaded', panguInit)</script><div class="js-pjax"><script>(() => {
+  const $mermaidWrap = document.querySelectorAll('#article-container .mermaid-wrap')
+  if ($mermaidWrap.length) {
+    window.runMermaid = () => {
+      window.loadMermaid = true
+      const theme = document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'default'
+
+      Array.from($mermaidWrap).forEach((item, index) => {
+        const mermaidSrc = item.firstElementChild
+        const mermaidThemeConfig = '%%{init:{ \'theme\':\'' + theme + '\'}}%%\n'
+        const mermaidID = 'mermaid-' + index
+        const mermaidDefinition = mermaidThemeConfig + mermaidSrc.textContent
+        mermaid.mermaidAPI.render(mermaidID, mermaidDefinition, (svgCode) => {
+          mermaidSrc.insertAdjacentHTML('afterend', svgCode)
+        })
+      })
+    }
+
+    const loadMermaid = () => {
+      window.loadMermaid ? runMermaid() : getScript('https://cdn.jsdelivr.net/npm/mermaid/dist/mermaid.min.js').then(runMermaid)
+    }
+
+    window.pjax ? loadMermaid() : document.addEventListener('DOMContentLoaded', loadMermaid)
+  }
+})()</script></div><script async src="/js/title.js"></script><canvas class="fireworks" mobile="true"></canvas><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/dist/fireworks.min.js"></script></div></body></html>
